@@ -1,3 +1,4 @@
+import { FormControl, Validators } from '@angular/forms';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,5 +7,6 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'my-app';
+  nameFormControl = new FormControl('', []);
+  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
 }
