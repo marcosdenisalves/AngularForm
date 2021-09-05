@@ -12,7 +12,11 @@ export class AppService {
 
   path = 'http://localhost:8080/notaryoffices';
 
-  public insert(notary: Notary): void {
-    this.http.post<Observable<any>>(this.path, notary);
+  public get(): Observable<any> {
+    return this.http.get(this.path);
+  }
+
+  public insert(notary: Notary): Observable<any> {
+    return this.http.post<Observable<any>>(this.path, notary);
   }
 }

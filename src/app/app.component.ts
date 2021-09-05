@@ -21,6 +21,6 @@ export class AppComponent {
   ];
 
   public submit(): void {
-    this.service.insert(this.notary);
+    this.service.insert(this.notary).subscribe();
   }
 }
