@@ -15,3 +15,13 @@
   margin-top: 0.5em;
   width: 100%;
 }
+
+.button_container {
+  align-items: center;
+  display: flex;
+  margin-top: 1rem;
+}
+
+.submit {
+  width: 22%;
+}

@@ -1,36 +1,46 @@
-<form class="form">
+<form (ngSubmit)="submit()" class="form">
   <div class="form-full-width">
     <label>Name</label>
-    <input [formControl]="nameFormControl" />
+    <input [(ngModel)]="notary.name" name="name" />
   </div>
   <div class="form-full-width">
     <label>Email</label>
     <input
+      [(ngModel)]="notary.email"
       type="email"
-      [formControl]="emailFormControl"
+      name="email"
       placeholder="Ex. pat@example.com"
     />
   </div>
   <div class="form-full-width">
     <label>Phone</label>
-    <input />
+    <input name="phone" [(ngModel)]="notary.phone" />
   </div>
   <div class="form-full-width">
     <label>Street</label>
-    <input />
+    <input name="street" [(ngModel)]="notary.street" />
   </div>
   <div class="form-full-width">
     <label>City</label>
-    <input />
+    <input name="city" [(ngModel)]="notary.city" />
   </div>
   <div class="form-full-width">
     <label>Country</label>
-    <input />
+    <input name="country" [(ngModel)]="notary.country" />
   </div>
   <div class="form-full-width">
-    <label>Certificates</label>
-    <select>
-      <option>Select here...</option>
+    <label for="certificate">Certificates</label>
+    <select
+      [(ngModel)]="notary.certificate"
+      name="certificate"
+      id="certificate"
+    >
+      <option *ngFor="let certificate of certificates" [ngValue]="certificate">
+        {{ certificate.name }}
+      </option>
     </select>
+  </div>
+  <div class="button_container">
+    <button class="submit" type="submit">Submit</button>
   </div>
 </form>
