@@ -19,19 +19,19 @@ export class ListTableComponent {
     new Certificate(3, '2° Via de Certidão de Óbito'),
   ];
 
-  public addCertificate(newCertificate: Certificate): void {
-    this.selectedCertificates.push(newCertificate);
-  }
-
   public addItem(): void {
-    validateDuplicateItens();
+    if (this.selectedCertificates.length > 0) {
+      validateDuplicateItens(this.itemSelected, this.selectedCertificates);
+    } else {
+      this.selectedCertificates.push(this.itemSelected);
+    }
   }
 }
 
-function validateDuplicateItens() {
-  for (var i = 0; i < this.selectedCertificates.length; i++) {
-    if (this.selectedCertificates.indexOf(this.itemSelected) === -1) {
-      this.selectedCertificates.push(this.itemSelected);
+function validateDuplicateItens(itemSelected: Certificate, selectedCertificates: Array<Certificate>) {
+  for (var i = 0; i < selectedCertificates.length; i++) {
+    if (selectedCertificates.indexOf(itemSelected) === -1) {
+      selectedCertificates.push(itemSelected);
     }
   }
 }

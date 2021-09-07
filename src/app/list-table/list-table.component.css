@@ -1,11 +1,15 @@
+.component_container {
+  margin-top: 0.5rem;
+  width: 22rem;
+}
+
 .cetificates_container {
   align-items: baseline ;
-  border: 1px solid rgb(135, 139, 141);
+  border: 1px solid #9c9c9c;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 0.2em;
   padding: 0 0.2em 0.2em 0.3em;
-  margin-top: 0.5rem;
-  width: 30%;
 }
 
 .cetificates_container__label {
@@ -21,4 +25,21 @@
   height: auto;
   margin: 0 0.5em 0 0;
   width: auto;
+}
+
+.table_container {
+  display: flex;
+  border: 1px solid #9c9c9c;
+}
+
+.certificates_table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 5px;
 }

@@ -28,8 +28,8 @@
     <label>Country</label>
     <input name="country" [(ngModel)]="notary.country" />
   </div>
-  <app-list-table></app-list-table>
   <div class="button_container">
-    <button class="submit" type="submit">Submit</button>
+    <button disabled class="submit" type="submit">Submit</button>
   </div>
+  <app-list-table [notary]="notary"></app-list-table>
 </form>
