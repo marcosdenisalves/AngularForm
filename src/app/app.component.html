@@ -28,18 +28,7 @@
     <label>Country</label>
     <input name="country" [(ngModel)]="notary.country" />
   </div>
-  <div class="form-full-width">
-    <label for="certificate">Certificates</label>
-    <select
-      [(ngModel)]="notary.certificate"
-      name="certificate"
-      id="certificate"
-    >
-      <option *ngFor="let certificate of certificates" [ngValue]="certificate">
-        {{ certificate.name }}
-      </option>
-    </select>
-  </div>
+  <app-list-table></app-list-table>
   <div class="button_container">
     <button class="submit" type="submit">Submit</button>
   </div>

@@ -1,0 +1,15 @@
+<div class="cetificates_container">
+  <div class="cetificates_container__label">
+    <label>Certificates</label>
+  </div>
+  <div class="selector_container">
+    <div class="add_button">
+      <button (click)="addItem()" type="button">Add</button>
+    </div>
+    <select [(ngModel)]="itemSelected" name="certificate" id="certificate">
+      <option *ngFor="let certificate of certificates" [ngValue]="certificate">
+        {{ certificate.name }}
+      </option>
+    </select>
+  </div>
+</div>
