@@ -1,35 +1,31 @@
 <form (ngSubmit)="submit()" class="form">
   <div class="form-full-width">
     <label>Name</label>
-    <input [(ngModel)]="notary.name" name="name" />
+    <input class="inputClass" [(ngModel)]="notary.name" name="name" />
   </div>
   <div class="form-full-width">
     <label>Email</label>
-    <input
-      [(ngModel)]="notary.email"
-      type="email"
-      name="email"
-      placeholder="Ex. pat@example.com"
-    />
+    <input class="inputClass" [(ngModel)]="notary.email" type="email" name="email" placeholder="Ex. pat@example.com" />
   </div>
   <div class="form-full-width">
     <label>Phone</label>
-    <input name="phone" [(ngModel)]="notary.phone" />
+    <input class="inputClass" name="phone" [(ngModel)]="notary.phone" />
   </div>
   <div class="form-full-width">
     <label>Street</label>
-    <input name="street" [(ngModel)]="notary.street" />
+    <input class="inputClass" name="street" [(ngModel)]="notary.street" />
   </div>
   <div class="form-full-width">
     <label>City</label>
-    <input name="city" [(ngModel)]="notary.city" />
+    <input class="inputClass" name="city" [(ngModel)]="notary.city" />
   </div>
   <div class="form-full-width">
     <label>Country</label>
-    <input name="country" [(ngModel)]="notary.country" />
+    <input class="inputClass" name="country" [(ngModel)]="notary.country" />
   </div>
   <div class="button_container">
     <button disabled class="submit" type="submit">Submit</button>
   </div>
   <app-list-table [notary]="notary"></app-list-table>
+  <app-modal></app-modal>
 </form>
