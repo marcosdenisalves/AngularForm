@@ -23,9 +23,8 @@
     <label>Country</label>
     <input class="inputClass" name="country" [(ngModel)]="notary.country" />
   </div>
+  <button (click)="openDialog()">dialog</button>
   <div class="button_container">
     <button disabled class="submit" type="submit">Submit</button>
   </div>
-  <app-list-table [notary]="notary"></app-list-table>
-  <app-modal></app-modal>
 </form>

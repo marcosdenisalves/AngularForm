@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { AppService } from './app.service';
+import { ListTableComponent } from './list-table/list-table.component';
 import { Notary } from './model/notary';
 
 @Component({
@@ -10,7 +12,17 @@ import { Notary } from './model/notary';
 export class AppComponent {
   notary: Notary = new Notary('', '', '', '', '', '', null);
 
-  constructor(private service: AppService) { }
+  constructor(
+    private service: AppService,
+    private dialog: MatDialog
+  ) { }
+
+  openDialog() {
+    let dialogRef = this.dialog.open(ListTableComponent, {
+      height: '100%',
+      width: '100%',
+    });
+  }
 
   public submit(): void {
     this.service.insert(this.notary).subscribe();
