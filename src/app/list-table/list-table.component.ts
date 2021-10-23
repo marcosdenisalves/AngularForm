@@ -8,17 +8,19 @@ import { Notary } from '../model/notary';
   styleUrls: ['./list-table.component.css']
 })
 export class ListTableComponent {
-  @Input() notary: Notary;
-
   selectedCertificates: Array<Certificate> = [];
   itemSelected: Certificate;
-
+  @Input() notary: Notary;
+  
   certificates: Array<Certificate> = [
     new Certificate(1, '2° Via de Certidão de Casamento'),
     new Certificate(2, '2° Via de Certidão de Nascimento'),
     new Certificate(3, '2° Via de Certidão de Óbito'),
   ];
-
+  
+  columnsToDisplay = ['id', 'name'];
+  dataSource = this.certificates;
+  
   public addItem(): void {
     if (this.selectedCertificates.length > 0) {
       validateDuplicateItens(this.itemSelected, this.selectedCertificates);

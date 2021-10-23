@@ -1,45 +1,43 @@
-.component_container {
-  margin-top: 0.5rem;
-  width: auto;
+.container--component {
+  border: 1px solid rgb(224 224 224);
+  padding: 1em;
 }
 
-.cetificates_container {
-  align-items: baseline ;
-  border: 1px solid #9c9c9c;
+.control--table--container {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 0.2em;
-  padding: 0 0.2em 0.2em 0.3em;
 }
 
-.cetificates_container__label {
-  margin: 0.6rem 0;
+.table--container {
+  border: 1px solid rgb(224 224 224);
 }
 
-.add_button {
-  margin-right: 0.4em;
+.mat-header-row {
+  height: 2em;
+  padding: 1em;
 }
 
-.selector_container {
-  display: flex;
-  height: auto;
-  margin: 0 0.5em 0 0;
-  width: auto;
+.mat-header-cell {
+  padding: 1em;
 }
 
-.table_container {
-  display: flex;
-  border: 1px solid #9c9c9c;
+.text--column--header {
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+  justify-content: center;
 }
 
-.certificates_table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
+table {
   width: 100%;
 }
+.mat-cell {
+  padding: 1em;
+}
+.mat-column-id {
+  width: 2em;
+  border-right: 1px solid rgb(224 224 224);
+}
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 5px;
+.mat-column-name {
+  padding-left: 1em;
 }

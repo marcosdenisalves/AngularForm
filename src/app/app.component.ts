@@ -19,7 +19,7 @@ export class AppComponent {
 
   openDialog() {
     let dialogRef = this.dialog.open(ListTableComponent, {
-      height: '100%',
+      height: 'auto',
       width: '100%',
     });
   }
