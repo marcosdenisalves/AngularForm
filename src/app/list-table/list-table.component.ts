@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Certificate } from '../model/certificate';
 import { Notary } from '../model/notary';
 
@@ -7,10 +8,10 @@ import { Notary } from '../model/notary';
   templateUrl: './list-table.component.html',
   styleUrls: ['./list-table.component.css']
 })
-export class ListTableComponent {
+export class ListTableComponent implements OnInit {
   selectedCertificates: Array<Certificate> = [];
   itemSelected: Certificate;
-  @Input() notary: Notary;
+  filterControl = new FormControl('');
   
   certificates: Array<Certificate> = [
     new Certificate(1, '2° Via de Certidão de Casamento'),
@@ -21,12 +22,15 @@ export class ListTableComponent {
   columnsToDisplay = ['id', 'name'];
   dataSource = this.certificates;
   
-  public addItem(): void {
-    if (this.selectedCertificates.length > 0) {
-      validateDuplicateItens(this.itemSelected, this.selectedCertificates);
-    } else {
-      this.selectedCertificates.push(this.itemSelected);
-    }
+  ngOnInit(): void {
+    this.filter();
+  }
+
+  filter() {
+    this.filterControl.valueChanges.subscribe(element => {
+      const search = new RegExp(element, 'i');
+      this.dataSource = this.certificates.filter(x => search.test(x.name));
+    });
   }
 }
 

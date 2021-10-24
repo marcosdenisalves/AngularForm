@@ -2,7 +2,7 @@
   <div class="control--table--container">
     <mat-form-field appearance="outline">
       <mat-label>Filter</mat-label>
-      <input matInput />
+      <input [formControl]="filterControl" matInput placeholder="notary name" />
     </mat-form-field>
   </div>
   <div class="table--container">
