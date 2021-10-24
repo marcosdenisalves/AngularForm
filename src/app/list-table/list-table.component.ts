@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatTableDataSource } from '@angular/material/table';
 import { Certificate } from '../model/certificate';
 import { Notary } from '../model/notary';
 
@@ -13,6 +14,9 @@ export class ListTableComponent implements OnInit {
   itemSelected: Certificate;
   filterControl = new FormControl('');
   
+  dataSource = new MatTableDataSource<Certificate>();
+  
+  certificatesFiltered: Array<Certificate>;
   certificates: Array<Certificate> = [
     new Certificate(1, '2° Via de Certidão de Casamento'),
     new Certificate(2, '2° Via de Certidão de Nascimento'),
@@ -20,16 +24,22 @@ export class ListTableComponent implements OnInit {
   ];
   
   columnsToDisplay = ['id', 'name'];
-  dataSource = this.certificates;
   
+
   ngOnInit(): void {
+    this.initializeList();
     this.filter();
+  }
+
+  initializeList() {
+    this.certificatesFiltered = this.certificates;
+    this.dataSource.data = this.certificates;
   }
 
   filter() {
     this.filterControl.valueChanges.subscribe(element => {
       const search = new RegExp(element, 'i');
-      this.dataSource = this.certificates.filter(x => search.test(x.name));
+      this.certificates = this.certificatesFiltered.filter(x => search.test(x.name));
     });
   }
 }
