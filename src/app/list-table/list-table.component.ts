@@ -39,7 +39,7 @@ export class ListTableComponent implements OnInit {
   filter() {
     this.filterControl.valueChanges.subscribe((element) => {
       const search = new RegExp(element, "i");
-      this.certificates = this.certificatesFiltered.filter((x) =>
+      this.dataSource.data = this.certificatesFiltered.filter((x) =>
         search.test(x.name)
       );
     });
