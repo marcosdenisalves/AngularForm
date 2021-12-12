@@ -1,6 +1,6 @@
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { SelectionModel } from "@angular/cdk/collections";
-import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { ThemePalette } from "@angular/material/core";
 import { MatSort, Sort } from "@angular/material/sort";
@@ -31,7 +31,8 @@ export class ListTableComponent implements OnInit, AfterViewInit {
   ];
 
   @ViewChild(MatSort) sort: MatSort;
-  
+  @Output() closed = new EventEmitter<Boolean>();
+
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
@@ -83,6 +84,10 @@ export class ListTableComponent implements OnInit, AfterViewInit {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  closeModal() {
+    this.closed.emit(true);
   }
 }
 

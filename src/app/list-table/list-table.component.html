@@ -4,6 +4,10 @@
       <mat-label>Filter</mat-label>
       <input [formControl]="filterControl" matInput placeholder="notary name" />
     </mat-form-field>
+    <button (click)="closeModal()" matTooltip="close modal" 
+      mat-icon-button aria-label="This button will close modal">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">close</mat-icon>
+    </button> 
   </div>
   <div class="table--container">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z1"

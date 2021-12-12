@@ -5,6 +5,7 @@
 
 .control--table--container {
   display: flex;
+  justify-content: space-between;
 }
 
 .mat-column-select {
