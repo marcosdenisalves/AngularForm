@@ -1,7 +1,9 @@
+import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { SelectionModel } from "@angular/cdk/collections";
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { ThemePalette } from "@angular/material/core";
+import { MatSort, Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Certificate } from "../model/certificate";
 
@@ -10,7 +12,9 @@ import { Certificate } from "../model/certificate";
   templateUrl: "./list-table.component.html",
   styleUrls: ["./list-table.component.css"],
 })
-export class ListTableComponent implements OnInit {
+export class ListTableComponent implements OnInit, AfterViewInit {
+  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+
   selectedCertificates: Array<Certificate> = [];
   itemSelected: Certificate;
   filterControl = new FormControl("");
@@ -25,7 +29,13 @@ export class ListTableComponent implements OnInit {
     new Certificate(2, "2° Via de Certidão de Nascimento"),
     new Certificate(3, "2° Via de Certidão de Óbito"),
   ];
-    
+
+  @ViewChild(MatSort) sort: MatSort;
+  
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
+  }
+
   ngOnInit(): void {
     this.initializeList();
     this.filter();
@@ -65,6 +75,14 @@ export class ListTableComponent implements OnInit {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+  announceSortChange(sortState: Sort) {
+    if (sortState.direction) {
+      this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
+    } else {
+      this._liveAnnouncer.announce('Sorting cleared');
+    }
   }
 }
 
