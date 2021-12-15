@@ -1,8 +1,9 @@
 import { LiveAnnouncer } from "@angular/cdk/a11y";
 import { SelectionModel } from "@angular/cdk/collections";
-import { AfterViewInit, Component, EventEmitter, OnInit, Output, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, EventEmitter, Inject, OnInit, Output, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { ThemePalette } from "@angular/material/core";
+import { MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { MatSort, Sort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { Certificate } from "../model/certificate";
@@ -13,17 +14,27 @@ import { Certificate } from "../model/certificate";
   styleUrls: ["./list-table.component.css"],
 })
 export class ListTableComponent implements OnInit, AfterViewInit {
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    @Inject(MAT_DIALOG_DATA) public data: {certificatesFromDialog: Array<Certificate>}
+  ) {}
 
   selectedCertificates: Array<Certificate> = [];
+  
   itemSelected: Certificate;
+  
   filterControl = new FormControl("");
+  
   theme: ThemePalette = 'primary'
 
   dataSource = new MatTableDataSource<Certificate>();
+  
   selection = new SelectionModel<Certificate>(true, []);
+  
   displayedColumns: string[] = ["select", "id", "name"];
+  
   certificatesFiltered: Array<Certificate>;
+  
   certificates: Array<Certificate> = [
     new Certificate(1, "2° Via de Certidão de Casamento"),
     new Certificate(2, "2° Via de Certidão de Nascimento"),
@@ -31,7 +42,6 @@ export class ListTableComponent implements OnInit, AfterViewInit {
   ];
 
   @ViewChild(MatSort) sort: MatSort;
-  @Output() closed = new EventEmitter<Boolean>();
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -41,7 +51,7 @@ export class ListTableComponent implements OnInit, AfterViewInit {
     this.initializeList();
     this.filter();
   }
-
+  
   initializeList() {
     this.certificatesFiltered = this.certificates;
     this.dataSource.data = this.certificates;
@@ -84,10 +94,6 @@ export class ListTableComponent implements OnInit, AfterViewInit {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
-  }
-
-  closeModal() {
-    this.closed.emit(true);
   }
 }
 
