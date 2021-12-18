@@ -1,45 +1,52 @@
-import { LiveAnnouncer } from "@angular/cdk/a11y";
-import { SelectionModel } from "@angular/cdk/collections";
-import { AfterViewInit, Component, EventEmitter, Inject, OnInit, Output, ViewChild } from "@angular/core";
-import { FormControl } from "@angular/forms";
-import { ThemePalette } from "@angular/material/core";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatSort, Sort } from "@angular/material/sort";
-import { MatTableDataSource } from "@angular/material/table";
-import { Certificate } from "../model/certificate";
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { SelectionModel } from '@angular/cdk/collections';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Inject,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { ThemePalette } from '@angular/material/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Certificate } from '../model/certificate';
 
 @Component({
-  selector: "app-list-table",
-  templateUrl: "./list-table.component.html",
-  styleUrls: ["./list-table.component.css"],
+  selector: 'app-list-table',
+  templateUrl: './list-table.component.html',
+  styleUrls: ['./list-table.component.css'],
 })
 export class ListTableComponent implements OnInit, AfterViewInit {
-  constructor(
-    private _liveAnnouncer: LiveAnnouncer,
-    @Inject(MAT_DIALOG_DATA) public data: {certificates: Array<Certificate>}
-    ) {}
+  constructor(private _liveAnnouncer: LiveAnnouncer) {}
 
   selectedCertificates: Array<Certificate> = [];
+
   itemSelected: Certificate;
-  filterControl = new FormControl("");
-  theme: ThemePalette = 'primary'
+
+  filterControl = new FormControl('');
+
+  theme: ThemePalette = 'primary';
 
   dataSource = new MatTableDataSource<Certificate>();
 
   selection = new SelectionModel<Certificate>(true, []);
 
-  displayedColumns: string[] = ["select", "id", "name"];
+  displayedColumns: string[] = ['select', 'id', 'name'];
 
   certificatesFiltered: Array<Certificate>;
 
   certificates: Array<Certificate> = [
-    new Certificate(1, "2° Via de Certidão de Casamento"),
-    new Certificate(2, "2° Via de Certidão de Nascimento"),
-    new Certificate(3, "2° Via de Certidão de Óbito"),
+    new Certificate(1, '2° Via de Certidão de Casamento'),
+    new Certificate(2, '2° Via de Certidão de Nascimento'),
+    new Certificate(3, '2° Via de Certidão de Óbito'),
   ];
 
   @ViewChild(MatSort) sort: MatSort;
-  @Output() closed = new EventEmitter<Boolean>();
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
@@ -57,7 +64,7 @@ export class ListTableComponent implements OnInit, AfterViewInit {
 
   filter() {
     this.filterControl.valueChanges.subscribe((element) => {
-      const search = new RegExp(element, "i");
+      const search = new RegExp(element, 'i');
       this.dataSource.data = this.certificatesFiltered.filter((x) =>
         search.test(x.name)
       );
@@ -83,7 +90,9 @@ export class ListTableComponent implements OnInit, AfterViewInit {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.position + 1
+    }`;
   }
 
   announceSortChange(sortState: Sort) {
@@ -92,10 +101,6 @@ export class ListTableComponent implements OnInit, AfterViewInit {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
-  }
-
-  closeModal() {
-    this.closed.emit(true);
   }
 }
 
