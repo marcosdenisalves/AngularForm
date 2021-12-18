@@ -4,10 +4,10 @@
       <mat-label>Filter</mat-label>
       <input [formControl]="filterControl" matInput placeholder="notary name" />
     </mat-form-field>
-    <button (click)="closeModal()" matTooltip="close modal" 
+    <button mat-dialog-close matTooltip="close modal"
       mat-icon-button aria-label="This button will close modal">
       <mat-icon aria-hidden="false" aria-label="Example home icon">close</mat-icon>
-    </button> 
+    </button>
   </div>
   <div class="table--container">
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z1"
@@ -21,7 +21,7 @@
                         [aria-label]="checkboxLabel()"
                         [color]='theme'>
           </mat-checkbox>
-        </th> 
+        </th>
         <td mat-cell *matCellDef="let row">
           <mat-checkbox (click)="$event.stopPropagation()"
                         (change)="$event ? selection.toggle(row) : null"
@@ -30,18 +30,18 @@
                         [color]='theme'>
           </mat-checkbox>
         </td>
-      </ng-container> 
-      
+      </ng-container>
+
       <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header 
+        <th mat-header-cell *matHeaderCellDef mat-sort-header
           sortActionDescription="Sort by id">
           <span class="text--column--header">Id</span>
         </th>
         <td mat-cell *matCellDef="let element">{{ element.id }}</td>
       </ng-container>
-      
+
       <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header 
+        <th mat-header-cell *matHeaderCellDef mat-sort-header
           sortActionDescription="Sort by name">
           <span class="text--column--header">Name</span>
         </th>
