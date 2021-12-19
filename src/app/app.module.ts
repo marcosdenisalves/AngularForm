@@ -16,6 +16,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSortModule} from '@angular/material/sort';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { Validators } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     MatCheckboxModule,
     MatSortModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

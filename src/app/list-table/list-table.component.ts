@@ -11,7 +11,6 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Certificate } from '../model/certificate';
