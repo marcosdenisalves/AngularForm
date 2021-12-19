@@ -33,7 +33,7 @@
         </mat-form-field>
       </div>
       <div class="table--container">
-        <button mat-icon-button (click)="openDialogAndClosed()">
+        <button matTooltip="Add itens in table" mat-icon-button (click)="openDialogAndClosed()">
           <mat-icon aria-hidden="false" aria-label="Example home icon"
             >add</mat-icon
           >
@@ -44,7 +44,7 @@
           class="mat-elevation-z1"
           [dataSource]="dataSource"
           (matSortChange)="announceSortChange($event)"
-          *ngIf="certificates.length > 0"
+          *ngIf="certificatesSelected.length > 0"
         >
           <ng-container matColumnDef="id">
             <th
@@ -70,6 +70,18 @@
             <td mat-cell *matCellDef="let element">{{ element.name }}</td>
           </ng-container>
 
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>
+              <span class="text--column--header">Action</span>
+            </th>
+            <td mat-cell *matCellDef="let i = index">
+              <button mat-icon-button color="warn" matTooltip="Remove Item" (click)="deleteItemFromTable(i)">
+                <mat-icon aria-hidden="false" aria-label="Example home icon"
+                  >delete</mat-icon
+                >
+              </button>
+            </td>
+          </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr
             mat-row
@@ -80,12 +92,7 @@
       </div>
     </div>
     <div class="button-container">
-      <button
-      mat-flat-button
-      color="warn"
-    >
-      Back
-    </button>
+      <button mat-flat-button color="warn">Back</button>
       <button
         mat-flat-button
         color="primary"

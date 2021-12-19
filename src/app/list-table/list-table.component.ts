@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Certificate } from '../model/certificate';
@@ -21,7 +22,11 @@ import { Certificate } from '../model/certificate';
   styleUrls: ['./list-table.component.css'],
 })
 export class ListTableComponent implements OnInit, AfterViewInit {
-  constructor(private _liveAnnouncer: LiveAnnouncer) {}
+  constructor(
+    private _liveAnnouncer: LiveAnnouncer,
+    @Inject(MAT_DIALOG_DATA)
+    public data: { certificatesPreSelected: Array<Certificate> }
+  ) {}
 
   selectedCertificates: Array<Certificate> = [];
 
@@ -59,6 +64,7 @@ export class ListTableComponent implements OnInit, AfterViewInit {
   initializeList() {
     this.certificatesFiltered = this.certificates;
     this.dataSource.data = this.certificates;
+    this.selection.select(...this.data.certificatesPreSelected);
   }
 
   filter() {
@@ -99,17 +105,6 @@ export class ListTableComponent implements OnInit, AfterViewInit {
       this._liveAnnouncer.announce(`Sorted ${sortState.direction}ending`);
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
-    }
-  }
-}
-
-function validateDuplicateItens(
-  itemSelected: Certificate,
-  selectedCertificates: Array<Certificate>
-) {
-  for (var i = 0; i < selectedCertificates.length; i++) {
-    if (selectedCertificates.indexOf(itemSelected) === -1) {
-      selectedCertificates.push(itemSelected);
     }
   }
 }

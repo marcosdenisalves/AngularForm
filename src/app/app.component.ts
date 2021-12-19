@@ -2,7 +2,7 @@ import { ListTableComponent } from './list-table/list-table.component';
 import { FormBuilder } from '@angular/forms';
 import { AppService } from './app.service';
 import { MatDialog } from '@angular/material/dialog';
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { Notary } from './model/notary';
 import { MatTableDataSource } from '@angular/material/table';
 import { Certificate } from './model/certificate';
@@ -16,9 +16,9 @@ import { Sort } from '@angular/material/sort';
 })
 export class AppComponent {
   dataSource = new MatTableDataSource<Certificate>();
-  certificates: Array<Certificate> = [];
+  certificatesSelected: Array<Certificate> = [];
 
-  displayedColumns: string[] = ['id', 'name'];
+  displayedColumns: string[] = ['id', 'name', 'action'];
 
   notary: Notary = new Notary('', '', '', '', '', '', null);
 
@@ -27,7 +27,7 @@ export class AppComponent {
     private service: AppService,
     private dialog: MatDialog,
     private fb: FormBuilder
-  ) { }
+  ) {}
 
   notaryGroup = this.fb.group({
     name: [''],
@@ -35,18 +35,22 @@ export class AppComponent {
     phone: [''],
     street: [''],
     city: [''],
-    country: ['']
+    country: [''],
   });
 
   openDialogAndClosed() {
-    this.dialog.open(ListTableComponent, {
-      height: 'auto',
-      width: '100%',
-    }).afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      this.certificates = result;
-      this.dataSource.data = result;
-    });
+    this.dialog
+      .open(ListTableComponent, {
+        height: 'auto',
+        width: '100%',
+        data: { certificatesPreSelected: this.certificatesSelected },
+      })
+      .afterClosed()
+      .subscribe((result) => {
+        console.log(`Dialog result: ${result}`);
+        this.certificatesSelected = result;
+        this.dataSource.data = this.certificatesSelected;
+      });
   }
 
   onSubmit() {
@@ -60,5 +64,10 @@ export class AppComponent {
     } else {
       this._liveAnnouncer.announce('Sorting cleared');
     }
+  }
+
+  deleteItemFromTable(index: number) {
+    this.certificatesSelected.splice(index, 1);
+    this.dataSource.data = this.certificatesSelected;
   }
 }
