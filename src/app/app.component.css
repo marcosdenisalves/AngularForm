@@ -1,10 +1,39 @@
+.main-container {
+  border: 1px solid #e0e0e0;
+  margin: 1em;
+  border-radius: 3px;
+}
+
 .form {
   align-content: center;
-  border: solid 1px;
   display: flex;
   flex-direction: column;
-  padding: 4rem;
+  justify-content: space-between;
+  padding: 1rem 1.5rem 1rem 1.5rem;
   width: auto;
+}
+
+.form-container {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 15em;
+}
+
+.field-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 2em;
+  padding: 3em 2em 3em 2em;
+}
+
+.button-container {
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
 }
 
 .form label {
@@ -29,10 +58,51 @@
   width: auto;
 }
 
+.table--container {
+  border: 1px solid rgb(224 224 224);
+  display: flex;
+  flex-flow: column;
+  justify-content: stretch;
+  background-color: #3f51b5ed;
+  padding: 0.3em;
+  color: white;
+  border-radius: 0.4em;
+}
+
+.mat-header-row {
+  height: 2em;
+  padding: 1em;
+}
+
+.mat-header-cell {
+  padding: 1em;
+}
+
+.text--column--header {
+  color: black;
+  font-weight: bold;
+  font-size: 14px;
+  justify-content: center;
+}
+
+table {
+  width: 100%;
+}
+.mat-cell {
+  padding: 1em;
+}
+.mat-column-id {
+  width: 1em;
+  border-right: 1px solid rgb(224 224 224);
+}
+
+.mat-column-name {
+  padding-left: 1em;
+}
+
 .button_container {
   align-items: center;
   display: flex;
-  margin-top: 1rem;
 }
 
 .submit {
