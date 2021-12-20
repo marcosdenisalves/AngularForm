@@ -14,7 +14,7 @@ import { MatSort, Sort } from '@angular/material/sort';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements AfterViewInit{
+export class AppComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<Certificate>();
   certificatesSelected: Array<Certificate> = [];
 
