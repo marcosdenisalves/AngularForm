@@ -64,7 +64,7 @@ export class ListTableComponent implements OnInit, AfterViewInit {
   initializeList() {
     this.certificatesFiltered = this.certificates;
     this.dataSource.data = this.certificates;
-    this.selection.select(...this.data.certificatesPreSelected);
+    this.checkValuesPreSelected();
   }
 
   filter() {
@@ -98,6 +98,20 @@ export class ListTableComponent implements OnInit, AfterViewInit {
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
       row.position + 1
     }`;
+  }
+
+  private checkValuesPreSelected() {
+    if (this.data.certificatesPreSelected.length > 0) {
+      this.dataSource.data = this.data.certificatesPreSelected;
+      this.selection.select(...this.dataSource.data);
+      this.certificates.forEach((value) => {
+        const some = this.dataSource.data.some(
+          (data) => value.id === data.id && value.name === data.name
+        );
+        if (!some)
+          this.dataSource.data.push(value);
+      });
+    }
   }
 
   announceSortChange(sortState: Sort) {
