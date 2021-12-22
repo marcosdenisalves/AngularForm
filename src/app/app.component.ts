@@ -37,8 +37,12 @@ export class AppComponent implements AfterViewInit {
 
   notaryGroup = this.fb.group({
     name: ['', Validators.required],
-    email: ['', [Validators.required, Validators.email]],
-    phone: [''],
+    email: ['', [
+      Validators.required, Validators.email]
+    ],
+    phone: ['', [
+      Validators.required,Validators.pattern('[- +()0-9]+')]
+    ],
     street: [''],
     city: [''],
     country: [''],
@@ -98,5 +102,9 @@ export class AppComponent implements AfterViewInit {
 
   get email(): any {
     return this.notaryGroup.get('email');
+  }
+
+  get phone(): any {
+    return this.notaryGroup.get('phone');
   }
 }

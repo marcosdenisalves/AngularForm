@@ -11,10 +11,13 @@
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" placeholder="Ex. pat@example.com" />
           <mat-error *ngIf="email.invalid">{{ getEmailErrorMessage() }}</mat-error>
+          <mat-icon matSuffix>email</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Phone</mat-label>
           <input matInput formControlName="phone" />
+          <mat-error *ngIf="phone.invalid">{{ getErrorMessage() }}</mat-error>
+          <mat-icon matSuffix>phone</mat-icon>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Street</mat-label>
