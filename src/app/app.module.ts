@@ -16,6 +16,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSortModule} from '@angular/material/sort';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {Ng2TelInputModule} from 'ng2-tel-input';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
+    Ng2TelInputModule,
     MatCheckboxModule,
     MatTooltipModule,
     HttpClientModule,
