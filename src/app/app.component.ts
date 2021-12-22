@@ -1,5 +1,5 @@
 import { ListTableComponent } from './list-table/list-table.component';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { AppService } from './app.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
@@ -12,7 +12,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<Certificate>();
@@ -33,11 +33,11 @@ export class AppComponent implements AfterViewInit {
     private service: AppService,
     private dialog: MatDialog,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   notaryGroup = this.fb.group({
-    name: [''],
-    email: [''],
+    name: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
     phone: [''],
     street: [''],
     city: [''],
@@ -47,9 +47,11 @@ export class AppComponent implements AfterViewInit {
   openDialogAndClosed() {
     this.dialog
       .open(ListTableComponent, {
-        height: 'auto',
-        width: '100%',
         data: { certificatesPreSelected: this.certificatesSelected },
+        panelClass: 'custom-dialog-container',
+        disableClose: true,
+        height: 'auto%',
+        width: '100%',
       })
       .afterClosed()
       .subscribe((result) => {
@@ -61,7 +63,6 @@ export class AppComponent implements AfterViewInit {
 
   onSubmit() {
     this.service.insert(this.notary).subscribe();
-    console.warn(this.notaryGroup.value);
   }
 
   announceSortChange(sortState: Sort) {
@@ -73,7 +74,29 @@ export class AppComponent implements AfterViewInit {
   }
 
   deleteItemFromTable(index: number) {
-    this.certificatesSelected.splice(index, 1);
-    this.dataSource.data = this.certificatesSelected;
+    if (this.certificatesSelected != undefined) {
+      this.certificatesSelected.splice(index, 1);
+      this.dataSource.data = this.certificatesSelected;
+    }
+  }
+
+  getErrorMessage() {
+    return 'You must enter a value';
+  }
+
+  getEmailErrorMessage() {
+    if (this.email.hasError('required')) {
+      return 'You must enter a value';
+    }
+    const value = this.email.hasError('email') ? 'Not a valid email' : '';
+    return this.email.hasError('email') ? 'Not a valid email' : '';
+  }
+
+  get name(): any {
+    return this.notaryGroup.get('name');
+  }
+
+  get email(): any {
+    return this.notaryGroup.get('email');
   }
 }
