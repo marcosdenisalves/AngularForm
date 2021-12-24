@@ -1,5 +1,11 @@
 import { ListTableComponent } from './list-table/list-table.component';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { AppService } from './app.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
@@ -9,7 +15,23 @@ import { Certificate } from './model/certificate';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 
-let PHONE_MASK = ['(', /[1-9]/, /\d/,')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/,'-', /\d/, /\d/, /\d/, /\d/];
+let PHONE_MASK = [
+  '(',
+  /[1-9]/,
+  /\d/,
+  ')',
+  ' ',
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+  '-',
+  /\d/,
+  /\d/,
+  /\d/,
+  /\d/,
+];
 
 let PHONE_PATTERN = /(^\+?\d{2}\s)?\(\d{2,}\) \d{4,}\-\d{4}/g;
 
@@ -25,7 +47,7 @@ export class AppComponent implements AfterViewInit {
 
   displayedColumns: string[] = ['id', 'name', 'action'];
 
-  notary: Notary = new Notary('', '', '', '', '', '', null);
+  notary: Notary;
 
   @ViewChild(MatSort) sort: MatSort;
 
@@ -47,6 +69,7 @@ export class AppComponent implements AfterViewInit {
     street: [''],
     city: [''],
     country: [''],
+    certificates: this.fb.array([]),
   });
 
   openDialogAndClosed() {
@@ -59,15 +82,11 @@ export class AppComponent implements AfterViewInit {
         width: '100%',
       })
       .afterClosed()
-      .subscribe((result) => {
+      .subscribe((result: Array<any>) => {
         console.log(`Dialog result: ${result}`);
         this.certificatesSelected = result;
         this.dataSource.data = this.certificatesSelected;
       });
-  }
-
-  onSubmit() {
-    this.service.insert(this.notary).subscribe();
   }
 
   announceSortChange(sortState: Sort) {
@@ -103,6 +122,24 @@ export class AppComponent implements AfterViewInit {
     return this.phone.hasError('pattern') ? 'Invalid phone number' : '';
   }
 
+  onSubmit() {
+    console.log(this.notary);
+    this.prepareToSubmit();
+    this.service.insert(this.notary).subscribe();
+  }
+
+  prepareToSubmit() {
+   this.notary = new Notary(
+      this.name.value,
+      this.email.value,
+      this.phone.value,
+      this.street.value,
+      this.city.value,
+      this.country.value,
+      null
+    );
+  }
+
   get name() {
     return this.notaryGroup.get('name') as FormControl;
   }
@@ -113,5 +150,21 @@ export class AppComponent implements AfterViewInit {
 
   get phone() {
     return this.notaryGroup.get('phone') as FormControl;
+  }
+
+  get street() {
+    return this.notaryGroup.get('street') as FormControl;
+  }
+
+  get city() {
+    return this.notaryGroup.get('city') as FormControl;
+  }
+
+  get country() {
+    return this.notaryGroup.get('country') as FormControl;
+  }
+
+  get certificates() {
+    return this.notaryGroup.get('certificates') as FormArray;
   }
 }
