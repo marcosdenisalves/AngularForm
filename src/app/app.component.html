@@ -2,51 +2,86 @@
   <form [formGroup]="notaryGroup" class="form" (ngSubmit)="onSubmit()">
     <div class="form-container">
       <div class="field-container">
+        <mat-label>Name</mat-label>
         <mat-form-field appearance="outline">
-          <mat-label>Name</mat-label>
-          <input matInput formControlName="name" />
+          <input matInput formControlName="name" placeholder="Name" />
           <mat-error *ngIf="name.invalid">{{ getErrorMessage() }}</mat-error>
         </mat-form-field>
+        <mat-label>Email</mat-label>
         <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email" placeholder="Ex. pat@example.com" />
-          <mat-error *ngIf="email.invalid">{{ getEmailErrorMessage() }}</mat-error>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Ex. pat@example.com"
+          />
+          <mat-error *ngIf="email.invalid">{{
+            getEmailErrorMessage()
+          }}</mat-error>
           <mat-icon matSuffix>email</mat-icon>
         </mat-form-field>
+        <mat-label>Phone</mat-label>
         <mat-form-field appearance="outline">
-          <mat-label>Phone</mat-label>
-          <input ng2TelInput matInput formControlName="phone" />
-          <mat-error *ngIf="phone.invalid">{{ getErrorMessage() }}</mat-error>
+          <input
+            matInput
+            ng2TelInput
+            formControlName="phone"
+            [textMask]="{ mask: phoneMask }"
+            [ng2TelInputOptions]="{ initialCountry: 'br' }"
+          />
+          <mat-error *ngIf="phone.invalid || phone.hasError('pattern')">{{
+            getPhoneErrorMessage()
+          }}</mat-error>
           <mat-icon matSuffix>phone</mat-icon>
         </mat-form-field>
+        <mat-label>Street</mat-label>
         <mat-form-field appearance="outline">
-          <mat-label>Street</mat-label>
-          <input matInput formControlName="street" />
+          <input matInput formControlName="street" placeholder="Street" />
         </mat-form-field>
+        <mat-label>City</mat-label>
         <mat-form-field appearance="outline">
-          <mat-label>City</mat-label>
-          <input matInput formControlName="city" />
+          <input matInput formControlName="city" placeholder="City" />
         </mat-form-field>
+        <mat-label>Country</mat-label>
         <mat-form-field appearance="outline">
-          <mat-label>Country</mat-label>
-          <input matInput formControlName="country" />
+          <input matInput formControlName="country" placeholder="Country" />
         </mat-form-field>
       </div>
       <div class="table--container">
-        <button matTooltip="Add itens in table" mat-icon-button (click)="openDialogAndClosed()">
-          <mat-icon aria-hidden="false" aria-label="Example home icon">add</mat-icon>
+        <button
+          matTooltip="Add itens in table"
+          mat-icon-button
+          (click)="openDialogAndClosed()"
+        >
+          <mat-icon aria-hidden="false" aria-label="Example home icon"
+            >add</mat-icon
+          >
         </button>
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z1" matSort
-          (matSortChange)="announceSortChange($event)">
+        <table
+          mat-table
+          [dataSource]="dataSource"
+          class="mat-elevation-z1"
+          matSort
+          (matSortChange)="announceSortChange($event)"
+        >
           <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by id">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              sortActionDescription="Sort by id"
+            >
               <span class="text--column--header">Id</span>
             </th>
             <td mat-cell *matCellDef="let element">{{ element.id }}</td>
           </ng-container>
 
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+            <th
+              mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+              sortActionDescription="Sort by name"
+            >
               <span class="text--column--header">Name</span>
             </th>
             <td mat-cell *matCellDef="let element">{{ element.name }}</td>
@@ -57,20 +92,41 @@
               <span class="text--column--header">Action</span>
             </th>
             <td mat-cell *matCellDef="let i = index">
-              <button mat-icon-button color="warn" matTooltip="Remove Item" (click)="deleteItemFromTable(i)">
-                <mat-icon aria-hidden="false" aria-label="Example home icon">delete</mat-icon>
+              <button
+                mat-icon-button
+                color="warn"
+                matTooltip="Remove Item"
+                (click)="deleteItemFromTable(i)"
+              >
+                <mat-icon aria-hidden="false" aria-label="Example home icon"
+                  >delete</mat-icon
+                >
               </button>
             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"
-            (click)="selection.toggle(row) !== undefined ? selection.toggle(row) : undefined"></tr>
+          <tr
+            mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            (click)="
+              selection.toggle(row) !== undefined
+                ? selection.toggle(row)
+                : undefined
+            "
+          ></tr>
         </table>
       </div>
     </div>
     <div class="button-container">
-      <button mat-flat-button color="warn">Back</button>
-      <button mat-flat-button color="primary" type="submit" [disabled]="!notaryGroup.valid">
+      <button type="button" mat-flat-button color="warn" >
+        Back
+      </button>
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="!notaryGroup.valid"
+      >
         Submit
       </button>
     </div>

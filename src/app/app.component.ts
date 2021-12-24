@@ -9,6 +9,10 @@ import { Certificate } from './model/certificate';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatSort, Sort } from '@angular/material/sort';
 
+let PHONE_MASK = ['(', /[1-9]/, /\d/,')', ' ', /\d/, /\d/, /\d/, /\d/, /\d/,'-', /\d/, /\d/, /\d/, /\d/];
+
+let PHONE_PATTERN = /(^\+?\d{2}\s)?\(\d{2,}\) \d{4,}\-\d{4}/g;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -17,6 +21,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 export class AppComponent implements AfterViewInit {
   dataSource = new MatTableDataSource<Certificate>();
   certificatesSelected: Array<Certificate> = [];
+  phoneMask = PHONE_MASK;
 
   displayedColumns: string[] = ['id', 'name', 'action'];
 
@@ -33,16 +38,12 @@ export class AppComponent implements AfterViewInit {
     private service: AppService,
     private dialog: MatDialog,
     private fb: FormBuilder
-  ) { }
+  ) {}
 
   notaryGroup = this.fb.group({
     name: ['', Validators.required],
-    email: ['', [
-      Validators.required, Validators.email]
-    ],
-    phone: ['', [
-      Validators.required,Validators.pattern('[- +()0-9]+')]
-    ],
+    email: ['', [Validators.required, Validators.email]],
+    phone: ['', [Validators.required, Validators.pattern(PHONE_PATTERN)]],
     street: [''],
     city: [''],
     country: [''],
@@ -92,19 +93,25 @@ export class AppComponent implements AfterViewInit {
     if (this.email.hasError('required')) {
       return 'You must enter a value';
     }
-    const value = this.email.hasError('email') ? 'Not a valid email' : '';
     return this.email.hasError('email') ? 'Not a valid email' : '';
   }
 
-  get name(): any {
-    return this.notaryGroup.get('name');
+  getPhoneErrorMessage() {
+    if (this.phone.hasError('required')) {
+      return 'You must enter a value';
+    }
+    return this.phone.hasError('pattern') ? 'Invalid phone number' : '';
   }
 
-  get email(): any {
-    return this.notaryGroup.get('email');
+  get name() {
+    return this.notaryGroup.get('name') as FormControl;
   }
 
-  get phone(): any {
-    return this.notaryGroup.get('phone');
+  get email() {
+    return this.notaryGroup.get('email') as FormControl;
+  }
+
+  get phone() {
+    return this.notaryGroup.get('phone') as FormControl;
   }
 }

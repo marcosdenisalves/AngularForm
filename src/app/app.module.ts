@@ -11,18 +11,16 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatSortModule} from '@angular/material/sort';
-import {MatIconModule} from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {Ng2TelInputModule} from 'ng2-tel-input';
+import { MatInputModule } from '@angular/material/input';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatSortModule } from '@angular/material/sort';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { Ng2TelInputModule } from 'ng2-tel-input';
+import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ListTableComponent,
-  ],
+  declarations: [AppComponent, ListTableComponent],
   imports: [
     BrowserModule,
     ReactiveFormsModule,
@@ -34,14 +32,15 @@ import {Ng2TelInputModule} from 'ng2-tel-input';
     HttpClientModule,
     MatDialogModule,
     MatButtonModule,
-    MatMenuModule,
+    TextMaskModule,
     MatTableModule,
     MatInputModule,
     MatSortModule,
+    MatMenuModule,
     MatIconModule,
     FormsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
