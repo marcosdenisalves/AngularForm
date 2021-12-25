@@ -86,6 +86,7 @@ export class AppComponent implements AfterViewInit {
         console.log(`Dialog result: ${result}`);
         this.certificatesSelected = result;
         this.dataSource.data = this.certificatesSelected;
+        result.forEach((n) => this.certificates.push(this.fb.control(n)));
       });
   }
 
@@ -129,14 +130,14 @@ export class AppComponent implements AfterViewInit {
   }
 
   prepareToSubmit() {
-   this.notary = new Notary(
+    this.notary = new Notary(
       this.name.value,
       this.email.value,
       this.phone.value,
       this.street.value,
       this.city.value,
       this.country.value,
-      null
+      this.certificates.value
     );
   }
 
