@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { AppService } from './app.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Notary } from './model/notary';
 import { MatTableDataSource } from '@angular/material/table';
 import { Certificate } from './model/certificate';
@@ -40,8 +40,9 @@ let PHONE_PATTERN = /(^\+?\d{2}\s)?\(\d{2,}\) \d{4,}\-\d{4}/g;
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<Certificate>();
+  certificatesFromServer: Array<Certificate> = [];
   certificatesSelected: Array<Certificate> = [];
   phoneMask = PHONE_MASK;
 
@@ -53,6 +54,10 @@ export class AppComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.sort = this.sort;
+  }
+
+  ngOnInit(): void {
+    this.service.getCertificates().subscribe(res => this.certificatesFromServer = res);
   }
 
   constructor(
@@ -75,7 +80,10 @@ export class AppComponent implements AfterViewInit {
   openDialogAndClosed() {
     this.dialog
       .open(ListTableComponent, {
-        data: { certificatesPreSelected: this.certificatesSelected },
+        data: { 
+          certificatesPreSelected: this.certificatesSelected,
+          certificatesFromServer: this.certificatesFromServer 
+        },
         panelClass: 'custom-dialog-container',
         disableClose: true,
         height: 'auto%',
@@ -83,7 +91,6 @@ export class AppComponent implements AfterViewInit {
       })
       .afterClosed()
       .subscribe((result: Array<any>) => {
-        console.log(`Dialog result: ${result}`);
         this.certificatesSelected = result;
         this.dataSource.data = this.certificatesSelected;
         result.forEach((n) => this.certificates.push(this.fb.control(n)));

@@ -1,5 +1,5 @@
 <div class="main-container">
-  <form [formGroup]="notaryGroup" class="form" (ngSubmit)="onSubmit()">
+  <form [formGroup]="notaryGroup" class="form">
     <div class="form-container">
       <div class="field-container">
         <mat-label>Name</mat-label>
@@ -109,7 +109,7 @@
             mat-row
             *matRowDef="let row; columns: displayedColumns"
             (click)="
-              selection.toggle(row) !== undefined
+              selection !== undefined
                 ? selection.toggle(row)
                 : undefined
             "

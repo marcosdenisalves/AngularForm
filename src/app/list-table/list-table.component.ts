@@ -25,7 +25,10 @@ export class ListTableComponent implements OnInit, AfterViewInit {
   constructor(
     private _liveAnnouncer: LiveAnnouncer,
     @Inject(MAT_DIALOG_DATA)
-    public data: { certificatesPreSelected: Array<Certificate> }
+    public data: { 
+      certificatesPreSelected: Array<Certificate> 
+      certificatesFromServer: Array<Certificate>
+    }
   ) {}
 
   selectedCertificates: Array<Certificate> = [];
@@ -44,12 +47,6 @@ export class ListTableComponent implements OnInit, AfterViewInit {
 
   certificatesFiltered: Array<Certificate>;
 
-  certificates: Array<Certificate> = [
-    new Certificate(1, '2° Via de Certidão de Casamento'),
-    new Certificate(2, '2° Via de Certidão de Nascimento'),
-    new Certificate(3, '2° Via de Certidão de Óbito'),
-  ];
-
   @ViewChild(MatSort) sort: MatSort;
 
   ngAfterViewInit() {
@@ -62,8 +59,8 @@ export class ListTableComponent implements OnInit, AfterViewInit {
   }
 
   initializeList() {
-    this.certificatesFiltered = this.certificates;
-    this.dataSource.data = this.certificates;
+    this.certificatesFiltered = this.data.certificatesFromServer;
+    this.dataSource.data = this.data.certificatesFromServer;
     this.checkValuesPreSelected();
   }
 
@@ -104,7 +101,7 @@ export class ListTableComponent implements OnInit, AfterViewInit {
     if (this.data.certificatesPreSelected.length > 0) {
       this.dataSource.data = this.data.certificatesPreSelected;
       this.selection.select(...this.dataSource.data);
-      this.certificates.forEach((value) => {
+      this.data.certificatesFromServer.forEach((value) => {
         const some = this.dataSource.data.some(
           (data) => value.id === data.id && value.name === data.name
         );
