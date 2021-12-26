@@ -80,9 +80,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   openDialogAndClosed() {
     this.dialog
       .open(ListTableComponent, {
-        data: { 
+        data: {
           certificatesPreSelected: this.certificatesSelected,
-          certificatesFromServer: this.certificatesFromServer 
+          certificatesFromServer: this.certificatesFromServer
         },
         panelClass: 'custom-dialog-container',
         disableClose: true,
@@ -93,8 +93,13 @@ export class AppComponent implements OnInit, AfterViewInit {
       .subscribe((result: Array<any>) => {
         this.certificatesSelected = result;
         this.dataSource.data = this.certificatesSelected;
-        result.forEach((n) => this.certificates.push(this.fb.control(n)));
+        this.addCertificatesSelected(result);
       });
+  }
+
+  private addCertificatesSelected(result: any[]) {
+    this.certificates.clear();
+    result.forEach((n) => this.certificates.push(this.fb.control(n)));
   }
 
   announceSortChange(sortState: Sort) {
@@ -131,8 +136,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    console.log(this.notary);
     this.prepareToSubmit();
+    console.log(this.notary);
     this.service.insert(this.notary).subscribe();
   }
 
