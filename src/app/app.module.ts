@@ -20,7 +20,10 @@ import { Ng2TelInputModule } from 'ng2-tel-input';
 import { TextMaskModule } from 'angular2-text-mask';
 
 @NgModule({
-  declarations: [AppComponent, ListTableComponent],
+  declarations: [
+    AppComponent,
+    ListTableComponent,
+  ],
   imports: [
     BrowserModule,
     ReactiveFormsModule,

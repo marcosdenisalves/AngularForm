@@ -43,12 +43,6 @@ export class ListTableComponent implements OnInit, AfterViewInit {
 
   selection = new SelectionModel<Certificate>(true, []);
 
-  certificates: Array<Certificate> = [
-    new Certificate(1, '2° Via de Certidão de Casamento'),
-    new Certificate(2, '2° Via de Certidão de Nascimento'),
-    new Certificate(3, '2° Via de Certidão de Óbito'),
-  ]
-
   displayedColumns: string[] = ['select', 'id', 'name'];
 
   certificatesFiltered: Array<Certificate>;
@@ -65,8 +59,8 @@ export class ListTableComponent implements OnInit, AfterViewInit {
   }
 
   initializeList() {
-    this.certificatesFiltered = this.certificates;
-    this.dataSource.data = this.certificates;
+    this.certificatesFiltered = this.data.certificatesFromServer;
+    this.dataSource.data = this.data.certificatesFromServer;
     this.checkValuesPreSelected();
   }
 
@@ -107,7 +101,7 @@ export class ListTableComponent implements OnInit, AfterViewInit {
     if (this.data.certificatesPreSelected.length > 0) {
       this.dataSource.data = this.data.certificatesPreSelected;
       this.selection.select(...this.dataSource.data);
-      this.certificates.forEach((value) => {
+      this.data.certificatesFromServer.forEach((value) => {
         const some = this.dataSource.data.some(
           (data) => value.id === data.id && value.name === data.name
         );

@@ -1,19 +1,20 @@
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { ListTableComponent } from './list-table/list-table.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+import { MatSort, Sort } from '@angular/material/sort';
+import { Certificate } from './model/certificate';
+import { AppService } from './app.service';
+import { catchError } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { Notary } from './model/notary';
+import Swal from 'sweetalert2';
 import {
   FormArray,
   FormBuilder,
   FormControl,
-  FormGroup,
   Validators,
 } from '@angular/forms';
-import { AppService } from './app.service';
-import { MatDialog } from '@angular/material/dialog';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { Notary } from './model/notary';
-import { MatTableDataSource } from '@angular/material/table';
-import { Certificate } from './model/certificate';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
-import { MatSort, Sort } from '@angular/material/sort';
 
 let PHONE_MASK = [
   '(',
@@ -57,7 +58,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.service.getCertificates().subscribe(res => this.certificatesFromServer = res);
+    this.service
+      .getCertificates()
+      .subscribe((res) => (this.certificatesFromServer = res));
   }
 
   constructor(
@@ -82,7 +85,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       .open(ListTableComponent, {
         data: {
           certificatesPreSelected: this.certificatesSelected,
-          certificatesFromServer: this.certificatesFromServer
+          certificatesFromServer: this.certificatesFromServer,
         },
         panelClass: 'custom-dialog-container',
         disableClose: true,
@@ -138,7 +141,14 @@ export class AppComponent implements OnInit, AfterViewInit {
   onSubmit() {
     this.prepareToSubmit();
     console.log(this.notary);
-    this.service.insert(this.notary).subscribe();
+    this.service
+      .insert(this.notary)
+      .pipe(catchError((err) => {
+        throw this.showErrorAlert(err)
+      }))
+      .subscribe(() => {
+        this.showSuccessAlert();
+      });
   }
 
   prepareToSubmit() {
@@ -151,6 +161,18 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.country.value,
       this.certificates.value
     );
+  }
+
+  showSuccessAlert() {
+    Swal.fire('Thank you...', 'You submitted succesfully!', 'success');
+  }
+
+  showErrorAlert(err: any) {
+    Swal.fire({
+      icon: 'error',
+      title: err.statusText,
+      text: err.message,
+    });
   }
 
   get name() {
