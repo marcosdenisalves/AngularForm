@@ -6,6 +6,7 @@ export class Notary {
     public phone: string,
     public street: string,
     public city: string,
+    public state: string,
     public country: string,
     public certificates: Array<Certificate>
   ) {}

@@ -76,6 +76,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     phone: ['', [Validators.required, Validators.pattern(PHONE_PATTERN)]],
     street: [''],
     city: [''],
+    state: [''],
     country: [''],
     certificates: this.fb.array([]),
   });
@@ -158,6 +159,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       this.phone.value,
       this.street.value,
       this.city.value,
+      this.state.value,
       this.country.value,
       this.certificates.value
     );
@@ -193,6 +195,10 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   get city() {
     return this.notaryGroup.get('city') as FormControl;
+  }
+
+  get state() {
+    return this.notaryGroup.get('state') as FormControl;
   }
 
   get country() {
