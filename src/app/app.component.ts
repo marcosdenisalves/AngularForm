@@ -172,8 +172,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   showErrorAlert(err: any) {
     Swal.fire({
       icon: 'error',
-      title: err.statusText,
-      text: err.message,
+      title: 'Ops...',
+      text: err.statusText,
     });
   }
 

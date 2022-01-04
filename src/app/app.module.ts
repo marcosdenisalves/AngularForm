@@ -1,3 +1,4 @@
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -19,6 +20,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { Ng2TelInputModule } from 'ng2-tel-input';
 import { TextMaskModule } from 'angular2-text-mask';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,6 +29,7 @@ import { TextMaskModule } from 'angular2-text-mask';
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    MatProgressSpinnerModule,
     BrowserAnimationsModule,
     MatFormFieldModule,
     Ng2TelInputModule,
