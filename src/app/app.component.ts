@@ -9,6 +9,7 @@ import { catchError } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { Notary } from './model/notary';
 import Swal from 'sweetalert2';
+import { RequestSpinnerService } from './request-service/request-spinner-service.service';
 import {
   FormArray,
   FormBuilder,
@@ -64,6 +65,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   constructor(
+    public requestSpinnerService: RequestSpinnerService,
     private _liveAnnouncer: LiveAnnouncer,
     private service: AppService,
     private dialog: MatDialog,
@@ -147,7 +149,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       .pipe(catchError((err) => {
         throw this.showErrorAlert(err)
       }))
-      .subscribe(() => {
+      .subscribe((res) => {
+        console.log(res);
         this.showSuccessAlert();
       });
   }

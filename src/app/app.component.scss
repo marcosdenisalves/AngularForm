@@ -1,6 +1,8 @@
 mat-spinner {
     position: absolute;
     text-align: center;
+    display: block;
+    z-index: 5;
     top: 50%;
     left: 50%;
     right: 0;

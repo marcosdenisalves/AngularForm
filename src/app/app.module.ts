@@ -2,7 +2,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { ListTableComponent } from './list-table/list-table.component';
@@ -19,6 +19,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Ng2TelInputModule } from 'ng2-tel-input';
 import { TextMaskModule } from 'angular2-text-mask';
+import { RequestInterceptor } from './interceptor/request.interceptor';
 
 
 @NgModule({
@@ -46,7 +47,9 @@ import { TextMaskModule } from 'angular2-text-mask';
     MatIconModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
